@@ -1,0 +1,78 @@
+@font-face {
+    font-family: "UI-sans";
+    src: url(./Assets/fonts/UI-Sens-serif/static/OpenSans-Light.ttf);
+    
+}
+:root {
+  --bg-Black:#181818; /* Black Background */
+  --bg-Dark-Gray:#212121; /* Dark Gray Background */
+  --bg-Light-Gray:#303030; /* Light Gray Background */
+  --bg-Dark-Purple: #373669; /* Purple Background */
+  --text-Gray:#AFAFAF; /* Gray Text*/
+  --text-White: #FFFFFF; /* White Text*/
+  --text-Pink: #DCDBF6; /* Pink Text */
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "UI-sans", sans-serif;
+  color: var(--text-White);
+  display: flex;
+}
+#sideBar{
+    padding: 12px;
+    background-color: var(--bg-Black);
+    width: 250px;
+    height: 100vh;
+    
+}
+#main{
+    background-color: var(--bg-Dark-Gray);
+    width: calc(100% - 250px);
+    height: 100vh;
+}
+
+.logo-nav {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 10px;
+    align-items: center;
+}
+.btn-div-flex button{
+    text-align: left;
+    padding: 8px;
+    border-radius: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-White);
+    font-size: 1rem;
+    
+}
+.btn-div-flex button:hover{
+    background-color: var(--bg-Light-Gray);
+}
+
+.profile-pic {
+    width: 248px;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.profile-pic > img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%  ;
+}
+.upgrade {
+    width: 70px;
+    height: 29px;
+}

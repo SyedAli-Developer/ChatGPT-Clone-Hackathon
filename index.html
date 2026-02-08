@@ -1,13 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ChatGPT</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="shortcut icon" href="./Assets/images/chatgpt-logo-background-white.png" type="image/x-icon" />
 </head>
+
 <body>
-    
+    <!-- side Bar Started -->
+    <nav id="sideBar">
+
+        <!-- sticky bar started -->
+        <div class="stickybar">
+            <div class="logo-nav">
+                <a href=""><img width="28px" src="./Assets/images/ChatGPT-white.png" alt=""></a>
+                <a href=""><img width="20px" src="./Assets/images/sidebar.png" alt=""></a>
+            </div>
+            <br>
+            <div class="btn-div-flex">
+            <button><img src="./Assets/images/newchat.png" alt="">New Chat</button>
+            <button><img src="./Assets/images/search.png" alt="">Search chats</button>
+            <button><img src="./Assets/images/images.png" alt="">Images</button>
+            </div>
+        </div>
+
+        <!-- scrollabe content started -->
+        <div class="btn-div-flex">
+            <button><img src="./Assets/images/windows.png" alt="">Apps</button>
+            <button><img src="./Assets/images/codex.png" alt="">Codex</button>
+            <button><img src="./Assets/images/projects.png" alt="">Projects</button>
+        </div>
+        
+
+        <!-- seached history -->
+        <div id="searchHistory">
+            <!-- Seach History Content -->
+        </div>
+        <!-- profile started here  -->
+         <div class="profile-pic">
+            <img src="./Assets/images/profile.png" alt="">
+            <h3 class="username">Username</h3>
+            <span class="free">free</span>
+            <button class="upgrade">Upgrade</button>
+         </div>
+         <!-- profile eneded here   -->
+    </nav>
+    <!-- main started here  -->
+     
+    <main id="main">
+        <details className="dropdown">
+  <summary className="btn m-1">open or close</summary>
+  <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+    <li><a>Item 1</a></li>
+    <li><a>Item 2</a></li>
+  </ul>
+</details>
+    </main>
+    <!-- main eneded here  -->
 </body>
 <script src="./app.js"></script>
+<script src="https://kit.fontawesome.com/28bf8ecaf7.js" crossorigin="anonymous"></script>
 </html>
+</nav>
