@@ -18,3 +18,6 @@ else if (num === 4){
 else if (num === 5){
     heading.textContent = "Hey, Abbasi. Ready to dive in?"
 }
+else {
+    heading.textContent = "How can I help, Abbasi?"
+}

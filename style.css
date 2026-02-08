@@ -284,7 +284,10 @@ body {
     .response {
         width: 100%;
         height: 348px;
-        /* background-color: #373669; */
+        display:flex;
+        justify-content: center;
+        align-items: end;
+        padding-bottom: 50px;
     }
     .end-response {
         display: flex;
