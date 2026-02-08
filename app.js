@@ -13,5 +13,5 @@ else if (num === 3){
     heading.textContent = "What are you working on?"
 }
 else if (num === 4){
-    heading.textContent =
+    heading.textContent = "Ready when you are."
 }
