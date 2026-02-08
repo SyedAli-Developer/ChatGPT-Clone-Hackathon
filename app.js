@@ -16,5 +16,5 @@ else if (num === 4){
     heading.textContent = "Ready when you are."
 }
 else if (num === 5){
-    heading.t
+    heading.textContent = "Hey, Abbasi. Ready to dive in?"
 }
