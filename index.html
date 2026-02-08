@@ -20,7 +20,7 @@
                 <a href=""><img width="28px" src="./Assets/images/ChatGPT-white.png" alt=""></a>
                 <a href=""><img width="20px" src="./Assets/images/sidebar.png" alt=""></a>
             </div>
-            
+
             <div class="btn-div-flex martop">
                 <button><img src="./Assets/images/newchat.png" alt="" style="margin-left: 2px;">New chat</button>
                 <button><img src="./Assets/images/search.png" alt="">Search chats</button>
@@ -61,74 +61,38 @@
     <!-- main started  -->
 
     <main id="main">
-        <!-- main ka navbar start from here  -->
+
         <nav class="main-nav">
 
-            <!-- dropdown started -->
-            <div class="dropdown-wrapper">
+            <!-- Dropdown button  -->
+            <div id="Dropdown">
+                <div class="Dropdown-title">ChatGPT <span><i class="fa-solid fa-chevron-down"></i></span></div>
+                <!-- <div class="list">
+                 <ul>
+                    <li>ChatGPT Go</li>
+                    <li>ChatGPT</li>
+                 </ul>
+                </div> -->
 
-                <input type="checkbox" id="toggle">
-
-                <label for="toggle" class="dropdown-trigger">
-                    <span class="trigger-text">ChatGPT</span>
-                    <span class="chevron">▼</span>
-                </label>
-
-                <div class="dropdown-menu">
-                    <div class="menu-item active">ChatGPT</div>
-                    <div class="menu-item">
-                        ChatGPT Go
-                        <span class="subtitle">Our smartest model & more</span>
-                    </div>
-                </div>
 
             </div>
 
-            <!-- dropdown eneded here -->
+            <!-- Navbar Button  -->
+            <div class="getplus">
+                <button>
+                    <img src="./Assets/images/4corner-star.png" alt=""><span><b>Get Plus</b></span>
 
-            <!-- get plus started here  -->
-            <div class="plus-container">
-
-                <img src="./Assets/images/4corner-star.png" alt="">
-
-
-                <button><b>Get Plus</b></button>
-            </div>
-            <!-- get plus eneded here  -->
-            <!-- button icon started here -->
-            <div class="btn-icon">
-                <button class="iconss">
-                    <img src="./Assets/images/user.png" alt="">
-                </button>
-                <button class="iconss">
-                    <img src="./Assets/images/message-icon.png" alt="">
                 </button>
             </div>
-            <!-- button icon eneded here -->
+            <!-- User box Area  -->
+            <div class="user-div">
+                <span><img src="./Assets/images/user.png" alt=""></span>
+                <span><img src="./Assets/images/message-icon.png" alt=""></span>
+            </div>
+
         </nav>
 
-        <!-- response started here  -->
-        <div class="response">
-            <h2 class="responseh-heading "></h2>
-        </div>
-        <div class="end-response">
-            <div class="input">
-                <button class="add">
-                    <img src="./Assets/images/plus.png" alt="">
-                </button>
 
-                <input class="type" type="text" placeholder="Ask anything">
-
-                <button class="mic">
-                    <img src="./Assets/images/microphone.png" alt="">
-                </button>
-
-                <button class="call">
-                    <img src="./Assets/images/call.png" alt="">
-                </button>
-            </div>
-        </div>
-        <!-- response eneded here -->
     </main>
     <!-- main ened here  -->
 </body>
