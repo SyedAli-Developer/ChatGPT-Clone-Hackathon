@@ -142,19 +142,33 @@ body {
 
 /* main navbar */
 .main-nav {
+  position: sticky;
+  top: 0px;
+  z-index: 1000;
   display: grid;
   grid-template-columns: 1.7fr 1fr 1fr;
   /* background-color: red; */
 }
 
+/* DropDown started from here  */
+#Dropdown {
+  position: relative;
+}
+
 .Dropdown-title {
-  margin-left: 20px;
-  margin-top: 5px;
+  /* background-color: #ffffff; */
+  margin-top: -1px;
+  margin-left: 12px;
+  text-align: center;
   display: flex;
-  justify-content: start;
+  justify-content: center;
   gap: 5px;
   align-items: center;
-  font-size: 1.1rem;
+  font-size: 1.10rem;
+  cursor: pointer;
+  width: 110px;
+  height: 36px;
+  border-radius: 8px;
 }
 
 .Dropdown-title span {
@@ -162,6 +176,29 @@ body {
   color: var(--text-Gray);
 }
 
+.Dropdown-title:hover {
+  background-color: var(--bg-Light-Gray);
+}
+
+.list {
+  padding: 5px 10px;
+  border-radius: 15px;
+  width: 320px;
+  height: 100px;
+  background-color: var(--bg-Light-Gray);
+  position: absolute;
+  z-index: 1001;
+  top: 35.2px;
+  left: 10px;
+  box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.50);
+}
+.list div{
+  
+}
+
+
+
+/* Get Plus button Started From here  */
 .getplus button {
   height: 36px;
   width: 94px;
@@ -181,10 +218,12 @@ body {
   text-align: end;
   align-items: center;
 }
-.user-div span{
+
+.user-div span {
   margin: 0px 8px;
 }
-.user-div img{
+
+.user-div img {
   width: 21px;
   color: var(--text-White);
 }
