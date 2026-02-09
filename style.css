@@ -11,6 +11,8 @@
   /* Dark Gray Background */
   --bg-Light-Gray: #303030;
   /* Light Gray Background */
+  --bg-Full-Gray: #494949;
+  /* Full Light Gray Background*/
   --bg-Dark-Purple: #373669;
   /* Purple Background */
   --text-Gray: #afafaf;
@@ -177,22 +179,32 @@ body {
 }
 
 .Dropdown-title:hover {
-  background-color: var(--bg-Light-Gray);
+  background-color: var(--bg-Full-Gray);
 }
 
 .list {
-  padding: 5px 10px;
+  padding: 5px 7px;
   border-radius: 15px;
-  width: 320px;
+  width: 300px;
   height: 100px;
   background-color: var(--bg-Light-Gray);
   position: absolute;
   z-index: 1001;
   top: 35.2px;
   left: 10px;
-  box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.50);
+  box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.50);
 }
-.list div{
+
+.list div {
+  /* background-color: #373669; */
+  height: 50%;
+  border-radius: 10px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.list div:hover {
+  background-color: var(--bg-Full-Gray);
   
 }
 
