@@ -155,6 +155,7 @@ body {
   z-index: 1000;
   display: grid;
   grid-template-columns: 1.7fr 1fr 1fr;
+  height: 45px;
   /* background-color: red; */
 }
 
@@ -335,3 +336,89 @@ body {
 
 /* user-div ended  */
 /* main navbar ended */
+
+
+/* main response area started  */
+#response-area{
+  /* background-color: red; */
+  width: 100% ;
+  height: 35%;
+  z-index: 2000;
+}
+
+
+/* main response area ended  */
+
+/* main input area started  */
+#input-area{
+  /* background-color: #373669; */
+  width: 100%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.input-bar{
+  margin-top: 15px;
+  background-color: var(--bg-Light-Gray);
+  width: 47.3%;
+  height: 58px;
+  border-radius: 30px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0px 0px 4px var(--bg-Black);
+}
+.input-bar>div{
+  display: flex;
+  gap: 5px;
+}
+.input-bar>input{
+  margin-left: 10px;
+}
+.input-bar>input::placeholder{
+  color: var(--text-Gray);
+}
+.bg-transperant-div{
+  background-color: transparent;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 100%;
+  cursor: pointer;
+}
+.bg-transperant-div:hover{
+  background-color: var(--bg-Full-Gray);
+}
+.bg-white-div{
+  background-color: white;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 100%;
+  cursor: pointer;
+}
+.bg-white-div:hover{
+  background-color: rgba(255, 255, 255, 0.6);
+}
+#user-input{
+  width: 100%;
+  background-color: var(--bg-Light-Gray);
+  border: none;
+  height: 30px;
+  font-size: 1rem;
+}
+#user-input:focus{
+  caret-color: var(--text-White);
+  color: var(--text-White);
+  outline: none;
+}
+
+/* main input area ended  */
