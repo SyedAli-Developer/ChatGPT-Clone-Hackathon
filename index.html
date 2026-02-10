@@ -7,87 +7,54 @@
     <title>ChatGPT</title>
     <link rel="stylesheet" href="./style.css" />
     <link rel="shortcut icon" href="./Assets/images/chatgpt-logo-background-white.png" type="image/x-icon" />
-    <script src="./app.js" defer></script>  <!-- ← Yeh line add ki hai (JS alag file mein) -->
 </head>
 
 <body>
-
-    <!-- side Bar Started -->
     <nav id="sideBar">
-
-        <!-- sticky bar started -->
         <div class="stickybar">
             <div class="logo-nav">
                 <a href=""><img width="28px" src="./Assets/images/ChatGPT-white.png" alt=""></a>
                 <a href=""><img width="20px" src="./Assets/images/sidebar.png" alt=""></a>
             </div>
-
             <div class="btn-div-flex martop">
-                <button id="new-chat-btn"><img src="./Assets/images/newchat.png" alt="" style="margin-left: 2px;">New chat</button>  <!-- ← Yeh button ab new/clear chat handle karega -->
+                <button><img src="./Assets/images/newchat.png" alt="" style="margin-left: 2px;">New chat</button>
                 <button><img src="./Assets/images/search.png" alt="">Search chats</button>
                 <button><img src="./Assets/images/images.png" alt="">Images</button>
             </div>
         </div>
-
-        <!-- scrollabe content started -->
         <div>
-
             <div class="btn-div-flex">
                 <button><img src="./Assets/images/windows.png" alt="">Apps</button>
                 <button><img src="./Assets/images/codex.png" alt="" style="margin-left: 3px;">Codex</button>
                 <button><img src="./Assets/images/projects.png" alt="">Projects</button>
             </div>
-
-
-            <!-- chat history -->
             <div id="searchHistory">
-                <!-- Chat History Content (JS se add hoga) -->
-            </div>
+                </div>
         </div>
-        <!-- profile started -->
         <div class="profile">
-
             <img src="./Assets/images/profile.png" alt="">
-
-            <!-- Unlimited CHARACTER make it limited -->
             <h3 class="username">SyedAli Developer <br><span class="free">Free</span></h3>
-
-
             <button class="upgrade">Upgrade</button>
         </div>
-        <!-- profile end here   -->
     </nav>
-    <!-- main started  -->
-
-    <!-- main started  -->
-
+    
     <main id="main">
-        <!-- main navbar started -->
         <nav class="main-nav">
-
-            <!-- Dropdown button  -->
             <div id="Dropdown">
-
-                <!-- Dropdown Button  -->
                 <button class="Dropdown-title">ChatGPT <span><i class="fa-solid fa-chevron-down"></i></span></button>
-
-                <!-- Dropdown list -->
                 <div class="list">
-
                     <div class="model">
                         <div>
                             <img src="./Assets/images/ChatGPT-Go.png" alt="">
                             <div class="model-text">
                                 <li><b>ChatGPT Go</b></li>
                                 <li><span><b>Our smartest model & more</b></span></li>
-
                             </div>
                         </div>
                         <button>Upgrade</button>
                     </div>
                     <div class="model">
                         <div>
-
                             <img src="./Assets/images/ChatGPT-Quantum.png" alt="">
                             <div class="model-text">
                                 <li><b>ChatGPT</b></li>
@@ -96,64 +63,44 @@
                         </div>
                         <span><i class="fa-solid fa-check"></i></span>
                     </div>
-
                 </div>
             </div>
-
-
-
-            <!-- Navbar Button  -->
             <div class="getplus">
                 <button>
                     <img src="./Assets/images/4corner-star.png" alt=""><span><b>Get Plus</b></span>
-
                 </button>
             </div>
-            <!-- User box Area  -->
             <div class="user-div">
                 <span class="span-1 spans"><img src="./Assets/images/user.png" alt=""></span>
                 <span class="span-2 spans"><img src="./Assets/images/message-icon.png" alt=""></span>
             </div>
-
         </nav>
 
-        <!-- response area started  -->
         <section id="response-area">
             <div id="chat">
                 <h2 id="temp-heading"></h2>
-                
-
             </div>
         </section>
-        <!-- Input area started  -->
+        
         <section id="input-area">
-            
             <div class="input-bar">
                 <div class="bg-transperant-div">
                     <img width="26px" src="./Assets/images/plus.png" alt="">
-                    
                 </div>
-                
-                <textarea id="user-input" rows="1" placeholder="Ask any thing"></textarea>  <!-- ← Yeh change kiya hai: <input> ko <textarea> mein badla -->
-                
+                <textarea name="" id="user-input"  placeholder="Ask any thing"></textarea>
                 <div>
                     <div class="bg-transperant-div">
                         <img src="./Assets/images/mic-white.png" alt="">
                     </div>
-                    
                     <div id="sent-or-call" class="bg-white-div">
+                        <div class="imgOfSubmit"></div>
                         <img src="./Assets/images/call.png" alt="">
                     </div>
                 </div>
-                
             </div>
         </section>
-        
     </main>
-    <!-- main ened here  -->
-    
 </body>
+<script src="./app.js"></script>
 <script src="https://kit.fontawesome.com/28bf8ecaf7.js" crossorigin="anonymous"></script>
-
 </html>
-</nav>

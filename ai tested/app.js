@@ -14,6 +14,7 @@ function checkDisplay() {
         displayNone();
     }
 }
+
 function displayNone() {
     droplist.style.display = 'none';
 }
@@ -136,7 +137,7 @@ async function sendMessage() {
     const loadingContent = showLoading();
 
     try {
-        const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+            const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${API_KEY}`,

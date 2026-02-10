@@ -1,0 +1,185 @@
+/* ==============================================
+   1. Basic mobile adjustments (sab se chhota screen)
+   ≤ 480px  → small mobile phones
+   ============================================== */
+@media (max-width: 480px) {
+  body {
+    flex-direction: column;
+  }
+
+  #sideBar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 10px;
+  }
+
+  #main {
+    width: 100%;
+    height: auto;
+    padding: 0;
+  }
+
+  .main-nav {
+    grid-template-columns: 1fr auto;
+    padding: 8px 12px;
+    gap: 10px;
+  }
+
+  .Dropdown-title {
+    font-size: 1rem;
+    width: auto;
+    padding: 0 10px;
+  }
+
+  .getplus,
+  .user-div {
+    display: none;   /* chhote screen pe hide kar dete hain warna jagah nahi bachti */
+  }
+
+  .input-bar {
+    width: 96%;
+    margin: 12px auto;
+    padding: 8px;
+    height: auto;
+    border-radius: 24px;
+  }
+
+  .input-bar textarea {
+    font-size: 0.95rem;
+    padding-right: 8px;
+  }
+
+  #chat {
+    padding: 0 12px;
+  }
+
+  .user-message .message-content,
+  .ai-message .message-content {
+    max-width: 88%;
+    margin-left: 6px;
+    margin-right: 6px;
+    padding: 10px 14px;
+    font-size: 0.94rem;
+  }
+
+  .profile {
+    position: static;
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px 0;
+    border-top: 1px solid #444;
+  }
+
+  #searchHistory {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 10px;
+    padding-bottom: 8px;
+  }
+
+  .history-item {
+    min-width: 140px;
+    white-space: nowrap;
+  }
+}
+
+
+/* ==============================================
+   2. Mobile landscape + small tablets
+   481px – 768px
+   ============================================== */
+@media (max-width: 768px) {
+  #sideBar {
+    width: 100%;
+    height: auto;
+    padding: 12px;
+  }
+
+  .stickybar,
+  .profile {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .btn-div-flex {
+    width: 100%;
+  }
+
+  .main-nav {
+    grid-template-columns: auto 1fr auto;
+    padding: 10px 16px;
+  }
+
+  .getplus {
+    display: block;   /* thodi badi screen pe dikha do */
+  }
+
+  .user-div {
+    display: flex;
+  }
+
+  .input-bar {
+    width: 92%;
+  }
+
+  #chat {
+    padding: 0 20px;
+  }
+
+  .ai-message .message-content,
+  .user-message .message-content {
+    max-width: 82%;
+  }
+
+  /* Sidebar ko collapsible style de sakte ho (optional) */
+  #sideBar {
+    transition: transform 0.3s ease;
+  }
+  /* Agar hamburger menu banana ho to yeh use kar sakte ho baad mein */
+}
+
+
+/* ==============================================
+   3. Tablets (iPad size etc)
+   769px – 1024px
+   ============================================== */
+@media (max-width: 1024px) {
+  #sideBar {
+    width: 220px;     /* thoda chhota kar dete hain */
+  }
+
+  #main {
+    width: calc(100% - 220px);
+  }
+
+  .main-nav {
+    padding: 0 20px;
+  }
+
+  .input-bar {
+    width: 86%;
+  }
+
+  .ai-message .message-content,
+  .user-message .message-content {
+    max-width: 75%;
+  }
+
+  .model-text li {
+    font-size: 0.95rem;
+  }
+
+  .list {
+    width: 280px;
+    left: 0;
+  }
+}
+
+
+/* ==============================================
+   Desktop → no media query needed (default)
+   > 1024px → jo abhi likha hua hai woh chalega
+   ============================================== */
