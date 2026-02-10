@@ -28,7 +28,6 @@ function randomQ() {
     const texts = [
         "How can I help you?",
         "What’s in your mind today?",
-        "What’s on the agenda today?",
         "Where should we begin?",
         "What can I help with?",
         "Ready when you are.",
@@ -115,6 +114,9 @@ function cleanMarkdown(text) {
 
 async function sendMessage() {
     const text = input.value.trim();
+    const chat = document.getElementById('chat')
+    const Bar = document.getElementById('input-bar')
+    const responseArea =document.getElementById('response-area')
     if (!text) return;
 
     // Pehla message bhejte hi temp heading remove kar do
@@ -123,6 +125,9 @@ async function sendMessage() {
             tempHeading.remove();
         }
         isFirstMessage = false;
+        chat.style.flexDirection = 'column'
+
+        Bar.style.bottom = '5%'
     }
 
     addMessage(text, "user");
@@ -217,6 +222,7 @@ newChatBtn.addEventListener("click", () => {
 // History Functions
 function loadHistory() {
     if (!historyContainer) return;
+    document.getElementById('input-bar') .style.bottom = '5%'
 
     historyContainer.innerHTML = '';
     Object.keys(chats).forEach(id => {
