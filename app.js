@@ -64,7 +64,12 @@ input.addEventListener('input', () => {
 });
 
 // AI Chat Logic
-const API_KEY = "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";
+// API KEEYS 
+// Joker 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
+// Syed Ali   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
+// Sixkiller   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
+// Miner    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
+const API_KEY = "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";
 const MODEL = "tngtech/deepseek-r1t2-chimera:free";
 
 const chatContainer = document.getElementById('chat');
@@ -163,23 +168,45 @@ async function sendMessage() {
                 model: MODEL,
                 messages: [
                     {
-                        role: "system",
-                        content: `You are a helpful, friendly and conversational AI assistant. 
-Always respond naturally in Roman Urdu or Urdu-English mix, just like the user is talking.
-Keep answers clear, engaging and well-structured with paragraphs when needed.
-At the VERY END of EVERY response, always add 2-3 short, interesting follow-up questions in this EXACT format:
+    role: "system",
+    content: `You are a helpful, friendly and conversational AI assistant. 
+Always respond in the same language as the user asked (English if English, Roman Urdu if Roman Urdu, mix if mix).
+
+Formatting rules (follow these strictly in EVERY response):
+- ALWAYS break your answer into 3 or more separate paragraphs.
+- After EVERY single paragraph, add TWO blank lines (\\n\\n) so there is clear visual separation between paragraphs.
+- Do NOT put all text together without spacing.
+- Make sure each paragraph is short to medium length (3-6 sentences max per paragraph).
+- Use emojis where they fit naturally 😊🔥👍.
+- Put suggested questions ONLY in the VERY LAST paragraph.
+- Last paragraph ends with a short sentence + emojis, then exactly this:
 
 Suggested questions:
 1. [short question]
 2. [short question]
 3. [short question (optional)]
 
-Do NOT add anything after the suggested questions. Keep the suggestions relevant to the current conversation.`
-                    },
+- NOTHING after the suggested questions list. No extra text, no closing line, nothing.
+- Keep questions relevant and short.
+
+Example of correct formatting:
+This is paragraph one.
+It has some info.
+
+This is paragraph two.
+More details here.
+
+This is the last paragraph. Nice talking! 😄👍
+Suggested questions:
+1. Aur kya janna chahte ho?
+2. Koi aur sawal?
+3. Next topic kya ho?
+`
+},
                     ...currentMessages
                 ],
-                temperature: 0.7,
-                max_tokens: 2048,
+                temperature: 1,
+                max_tokens: 2000,
             })
         });
 
