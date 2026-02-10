@@ -5,23 +5,15 @@
 }
 
 :root {
-  --bg-Black: #181818;
-  /* Black Background */
-  --bg-Dark-Gray: #212121;
-  /* Dark Gray Background */
-  --bg-Light-Gray: #303030;
-  /* Light Gray Background */
-  --bg-Full-Gray: #494949;
-  /* Full Light Gray Background*/
-  --bg-Dark-Purple: #373669;
-  /* Purple Background */
-  --bg-Light-Purple:#414071; /* Light Purple Background*/
-  --text-Gray: #afafaf;
-  /* Gray Text*/
-  --text-White: #ffffff;
-  /* White Text*/
-  --text-Pink: #dcdbf6;
-  /* Pink Text */
+  --bg-Black: #181818;  /* Black Background */
+  --bg-Dark-Gray: #212121;  /* Dark Gray Background */
+  --bg-Light-Gray: #303030;    /* Light Gray Background */
+  --bg-Full-Gray: #494949;  /* Full Light Gray Background*/
+  --bg-Dark-Purple: #373669;  /* Purple Background */
+  --bg-Light-Purple: #414071;   /* Light Purple Background*/
+  --text-Gray: #afafaf;   /* Gray Text*/
+  --text-White: #ffffff;  /* White Text*/
+  --text-Pink: #dcdbf6;   /* Pink Text */
 }
 
 * {
@@ -105,9 +97,11 @@ body {
   z-index: 1;
   cursor: pointer;
 }
-.profile:hover{
+
+.profile:hover {
   background-color: var(--bg-Light-Gray);
 }
+
 .profile img {
   width: 22px;
   height: 22px;
@@ -137,7 +131,8 @@ body {
   cursor: pointer;
   color: var(--text-White);
 }
-.upgrade:hover{
+
+.upgrade:hover {
   background-color: var(--bg-Light-Gray);
 }
 
@@ -160,6 +155,7 @@ body {
   z-index: 1000;
   display: grid;
   grid-template-columns: 1.7fr 1fr 1fr;
+  height: 45px;
   /* background-color: red; */
 }
 
@@ -196,6 +192,7 @@ body {
   background-color: var(--bg-Full-Gray);
 }
 
+/* Dropdown list started  */
 .list {
   display: none;
   padding: 5px 7px;
@@ -220,20 +217,27 @@ body {
   align-items: center;
   justify-content: space-between;
 }
+
 .model:hover {
   background-color: var(--bg-Full-Gray);
-  
+
 }
-.model img{
+
+.model img {
   width: 22px;
+  user-select: none;
 }
-.model>div{
+
+.model>div {
   display: flex;
   align-items: center;
   gap: 8px;
 }
-.model>button{
-    font-size: 0.72rem;
+.model>div>div>li{
+  user-select: none;
+}
+.model>button {
+  font-size: 0.72rem;
   padding: 5px 10px;
   border-radius: 50px;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -241,14 +245,17 @@ body {
   color: var(--text-White);
   cursor: pointer;
 }
-.model>button:hover{
+
+.model>button:hover {
   background-color: var(--bg-Full-Gray);
 }
-.model>span{
+
+.model>span {
   font-size: 12px;
   color: var(--text-Gray);
 }
-.model-text{
+
+.model-text {
   list-style: none;
   height: 100px;
   font-size: 0.9rem;
@@ -256,14 +263,18 @@ body {
   flex-direction: column;
   justify-content: center;
 }
-.model-text span{
+
+.model-text span {
   font-size: 0.7rem;
   color: var(--text-Gray);
 }
 
+/* Dropdown list ended */
+/* Dropdown ended  */
 
 /* Get Plus button Started From here  */
 .getplus button {
+  margin-left: 23px;
   height: 36px;
   width: 94px;
   padding: 5px 10px;
@@ -277,19 +288,24 @@ body {
   background-color: var(--bg-Dark-Purple);
   cursor: pointer;
 }
-.getplus button:hover{
+
+.getplus button:hover {
   background-color: var(--bg-Light-Purple);
 }
+
 .user-div {
-  
+
   position: relative;
 }
 
+/* Get Plus button ended */
+
+/* User div started  */
 .span-1 {
   right: 35px;
   position: absolute;
   margin: 0px 8px;
-  
+
   width: 35px;
   height: 35px;
   border-radius: 100%;
@@ -297,11 +313,12 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 .span-2 {
   right: -2px;
   position: absolute;
   margin: 0px 8px;
-  
+
   width: 35px;
   height: 35px;
   border-radius: 100%;
@@ -309,11 +326,124 @@ body {
   justify-content: center;
   align-items: center;
 }
-.spans:hover{
+
+.spans:hover {
   background-color: var(--bg-Full-Gray);
   cursor: pointer;
 }
+
 .user-div img {
   width: 21px;
   color: var(--text-White);
 }
+
+/* user-div ended  */
+/* main navbar ended */
+
+
+/* main response area started  */
+#response-area{
+
+  /* background-color: red; */
+  width: 100% ;
+  height: 35%;
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+#chat{
+/* background-color: red; */
+width: 46%;
+height: 100%;
+display: flex;
+flex-direction: column-reverse;
+
+}
+#temp-heading{
+  margin: 0px auto;
+  margin-bottom: 30px;
+}
+
+
+
+
+
+
+/* main response area ended  */
+
+/* main input area started  */
+#input-area{
+  /* background-color: #373669; */
+  width: 100%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.input-bar{
+  margin-top: 15px;
+  background-color: var(--bg-Light-Gray);
+  width: 47.3%;
+  height: 58px;
+  border-radius: 30px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0px 0px 4px var(--bg-Black);
+}
+.input-bar>div{
+  display: flex;
+  gap: 5px;
+}
+.input-bar>input{
+  margin-left: 10px;
+  color: var(--text-White);
+  font-size: 0.7rem;
+}
+.input-bar>input::placeholder{
+  color: var(--text-Gray);
+}
+.bg-transperant-div{
+  background-color: transparent;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 100%;
+  cursor: pointer;
+}
+.bg-transperant-div:hover{
+  background-color: var(--bg-Full-Gray);
+}
+.bg-white-div{
+  background-color: white;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 100%;
+  cursor: pointer;
+}
+.bg-white-div:hover{
+  background-color: rgba(255, 255, 255, 0.6);
+}
+#user-input{
+  width: 100%;
+  background-color: var(--bg-Light-Gray);
+  border: none;
+  height: 30px;
+  font-size: 1rem;
+}
+#user-input:focus{
+  caret-color: var(--text-White);
+  color: var(--text-White);
+  outline: none;
+}
+
+/* main input area ended  */
