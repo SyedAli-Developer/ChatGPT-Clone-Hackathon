@@ -445,7 +445,7 @@ gap: 20px;
   justify-content: space-between;
   box-shadow: 0px 0px 4px var(--bg-Black);
   /* overflow: hidden; */
-  position: absolute;
+  position: fixed;
   bottom: 48%;
 }
 .input-bar>div{

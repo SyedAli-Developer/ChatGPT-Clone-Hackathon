@@ -207,11 +207,12 @@ input.addEventListener("keydown", e => {
 });
 
 newChatBtn.addEventListener("click", () => {
-    if (confirm("Naya chat shuru karna hai? Current chat save ho jayega.")) {
+    if (confirm("Are you sure you want to start new chat.")) {
         currentChatId = Date.now().toString();
         currentMessages = [];
         chatContainer.innerHTML = "";
         tempHeading.textContent = "";
+        document.getElementById('input-bar').style.bottom ='50%'
         randomQ();  // New chat pe phir se random text (agar chaho to yeh line hata dena)
         isFirstMessage = true;
         loadHistory();
@@ -222,10 +223,11 @@ newChatBtn.addEventListener("click", () => {
 // History Functions
 function loadHistory() {
     if (!historyContainer) return;
-    document.getElementById('input-bar') .style.bottom = '5%'
-
+    
     historyContainer.innerHTML = '';
     Object.keys(chats).forEach(id => {
+        // document.getElementById('input-bar').style.bottom = '5%'
+
         const item = document.createElement("div");
         item.className = "history-item";
         item.textContent = chats[id].title || "New Chat";
