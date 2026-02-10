@@ -1,6 +1,6 @@
 // app.js
 
-// Dropdown function (tumhara code)
+// Dropdown function
 const dropBtn = document.querySelector(".Dropdown-title");
 const droplist = document.querySelector(".list");
 
@@ -21,8 +21,8 @@ function displayBlock() {
     droplist.style.display = 'block';
 }
 
-// Temporary heading (random text)
-const tempHeading = document.querySelector("#temp-heading");
+// Temp heading logic
+let tempHeading;
 
 function randomQ() {
     const texts = [
@@ -34,15 +34,25 @@ function randomQ() {
         "What are you working on?"
     ];
     const random = texts[Math.floor(Math.random() * texts.length)];
-    tempHeading.textContent = random;
+    if (tempHeading) tempHeading.textContent = random;
 }
-randomQ();
 
-// Input icon change (call → arrow)
+function recreateTempHeading() {
+    const chat = document.getElementById('chat');
+    const oldTemp = document.getElementById('temp-heading');
+    if (oldTemp) oldTemp.remove();
+
+    tempHeading = document.createElement('h2');
+    tempHeading.id = 'temp-heading';
+    chat.appendChild(tempHeading);
+    randomQ();
+}
+
+// Input icon change
 const input = document.getElementById('user-input');
 const submit = document.getElementById('sent-or-call');
 
-setInterval(() => {
+input.addEventListener('input', () => {
     if (input.value.trim() === '') {
         submit.innerHTML = `<img src="./Assets/images/call.png" alt="">`;
         submit.style.backgroundColor = 'white';
@@ -51,7 +61,7 @@ setInterval(() => {
         submit.style.backgroundColor = 'white';
         submit.style.color = 'black';
     }
-}, 100);
+});
 
 // AI Chat Logic
 const API_KEY = "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";
@@ -114,20 +124,20 @@ function cleanMarkdown(text) {
 
 async function sendMessage() {
     const text = input.value.trim();
-    const chat = document.getElementById('chat')
-    const Bar = document.getElementById('input-bar')
-    const responseArea =document.getElementById('response-area')
+    const Bar = document.getElementById('input-bar');
     if (!text) return;
 
-    // Pehla message bhejte hi temp heading remove kar do
+    // Pehla prompt send pe input bar bottom fixed ho jaye
     if (isFirstMessage) {
         if (tempHeading) {
             tempHeading.remove();
+            let inputbar = document.getElementById('input-bar')
+            inputbar.style.bottom = '15px'
         }
         isFirstMessage = false;
-        chat.style.flexDirection = 'column'
 
-        Bar.style.bottom = '5%'
+        // Yeh line sabse important hai – input bar ko bottom fixed pe le jao
+        Bar.classList.add('fixed-bottom');
     }
 
     addMessage(text, "user");
@@ -207,27 +217,19 @@ input.addEventListener("keydown", e => {
 });
 
 newChatBtn.addEventListener("click", () => {
-    if (confirm("Are you sure you want to start new chat.")) {
-        currentChatId = Date.now().toString();
-        currentMessages = [];
-        chatContainer.innerHTML = "";
-        tempHeading.textContent = "";
-        document.getElementById('input-bar').style.bottom ='50%'
-        randomQ();  // New chat pe phir se random text (agar chaho to yeh line hata dena)
-        isFirstMessage = true;
-        loadHistory();
-        input.focus();
+    if (confirm("Naya chat shuru karna hai? Current chat save ho jayega.")) {
+        startNewChat();
+        let inputbar = document.getElementById('input-bar')
+        inputbar.style.bottom = '48%'
     }
 });
 
 // History Functions
 function loadHistory() {
     if (!historyContainer) return;
-    
+
     historyContainer.innerHTML = '';
     Object.keys(chats).forEach(id => {
-        // document.getElementById('input-bar').style.bottom = '5%'
-
         const item = document.createElement("div");
         item.className = "history-item";
         item.textContent = chats[id].title || "New Chat";
@@ -244,7 +246,14 @@ function loadChat(chatId) {
     currentChatId = chatId;
     currentMessages = chats[chatId]?.messages || [];
     chatContainer.innerHTML = '';
-    currentMessages.forEach(msg => addMessage(msg.content, msg.role));
+
+    if (currentMessages.length === 0) {
+        startNewChat();
+    } else {
+        currentMessages.forEach(msg => addMessage(msg.content, msg.role));
+        isFirstMessage = false;
+        document.getElementById('input-bar').classList.add('fixed-bottom');
+    }
 
     document.querySelectorAll('.history-item').forEach(item => {
         item.classList.toggle("active", item.dataset.id === chatId);
@@ -264,9 +273,21 @@ function saveCurrentChat() {
     loadHistory();
 }
 
-// Initial load
-loadHistory();
-if (Object.keys(chats).length > 0) {
-    const latest = Object.keys(chats).sort().pop();
-    loadChat(latest);
+// New chat start function
+function startNewChat() {
+    currentChatId = Date.now().toString();
+    currentMessages = [];
+    chatContainer.innerHTML = "";
+    recreateTempHeading();
+    isFirstMessage = true;
+
+    const Bar = document.getElementById('input-bar');
+    Bar.classList.remove('fixed-bottom');  // reset to initial center-ish
+
+    loadHistory();
+    input.focus();
 }
+
+// Initial page load – history sidebar dikhao, lekin naya chat shuru karo
+loadHistory();
+startNewChat();

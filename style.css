@@ -465,7 +465,7 @@ gap: 20px;
   left: 40px;
   height: 25px;
   max-height: 50px;
-  background: #000;
+  /* background: #000; */
   align-content: center;
   /* min-height: 10px; */
   /* max-height: 150px; */
