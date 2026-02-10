@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat GPT</title>
+  <style>
+    :root {
+      --bg-color: #202123;
+      --text-color: #d9d9e3;
+      --input-bg: #343541;
+      --btn-bg: #10a37f;
+      --btn-hover: #0e8f70;
+      --sidebar-bg: #202123;
+      --message-user-bg: #343541;
+      --message-assistant-bg: #444654;
+      --border-color: #565869;
+      --active-chat-bg: #343541;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      height: 100vh;
+      display: flex;
+      overflow: hidden;
+    }
+
+    #app { display: flex; width: 100%; height: 100%; }
+
+    #sidebar {
+      width: 260px;
+      background: var(--sidebar-bg);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border-color);
+      overflow-y: auto;
+    }
+
+    #new-chat-btn {
+      background: var(--btn-bg);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-bottom: 16px;
+    }
+
+    #new-chat-btn:hover { background: var(--btn-hover); }
+
+    #chat-history {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .history-item {
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: transparent;
+    }
+
+    .history-item:hover { background: #2a2b32; }
+    .history-item.active {
+      background: var(--active-chat-bg);
+      color: white;
+    }
+
+    #main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #chat-container {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      max-width: 800px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .message {
+      display: flex;
+      gap: 16px;
+      max-width: 100%;
+    }
+
+    .message.user { justify-content: flex-end; }
+    .message.assistant { justify-content: flex-start; }
+
+    .message-content {
+      padding: 12px 20px;
+      border-radius: 12px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      max-width: 80%;
+    }
+
+    .message.user .message-content {
+      background: var(--message-user-bg);
+      color: var(--text-color);
+    }
+
+    .message.assistant .message-content {
+      background: var(--message-assistant-bg);
+      color: var(--text-color);
+    }
+
+    .message.loading .message-content::after {
+      content: "•••";
+      animation: dots 1.4s infinite;
+    }
+
+    @keyframes dots {
+      0%, 20% { content: "."; }
+      40% { content: ".."; }
+      60% { content: "..."; }
+      80%, 100% { content: ""; }
+    }
+
+    #input-container {
+      padding: 16px 24px;
+      background: var(--bg-color);
+      border-top: 1px solid var(--border-color);
+      max-width: 800px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    form {
+      display: flex;
+      position: relative;
+    }
+
+    #prompt {
+      flex: 1;
+      padding: 16px 20px;
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      color: var(--text-color);
+      font-size: 16px;
+      resize: none;
+      min-height: 56px;
+      max-height: 200px;
+      line-height: 1.4;
+    }
+
+    #prompt:focus {
+      outline: none;
+      border-color: #10a37f;
+    }
+
+    #submit-btn {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      background: none;
+      border: none;
+      color: #8e8ea0;
+      cursor: pointer;
+      font-size: 22px;
+    }
+
+    #submit-btn:hover { color: white; }
+    #submit-btn:disabled { color: #565869; cursor: not-allowed; }
+
+    @media (max-width: 768px) {
+      #sidebar { width: 220px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="sidebar">
+      <button id="new-chat-btn">+ New Chat</button>
+      <div id="chat-history"></div>
+    </div>
+
+    <div id="main">
+      <div id="chat-container"></div>
+      <div id="input-container">
+        <form id="chat-form">
+          <textarea id="prompt" rows="1" placeholder="Message Chat GPT..."></textarea>
+          <button type="submit" id="submit-btn">➤</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_KEY = "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";
+    const MODEL = "tngtech/deepseek-r1t2-chimera:free";
+
+    const chatContainer = document.getElementById("chat-container");
+    const form = document.getElementById("chat-form");
+    const promptInput = document.getElementById("prompt");
+    const submitBtn = document.getElementById("submit-btn");
+    const newChatBtn = document.getElementById("new-chat-btn");
+    const chatHistory = document.getElementById("chat-history");
+
+    let currentChatId = Date.now().toString();
+    let chats = JSON.parse(localStorage.getItem('chatGPTChats')) || {};
+    let currentMessages = [];
+
+    // Load saved chats into sidebar
+    function loadHistory() {
+      chatHistory.innerHTML = '';
+      Object.keys(chats).forEach(id => {
+        const item = document.createElement("div");
+        item.classList.add("history-item");
+        item.textContent = chats[id].title || "New Chat";
+        item.dataset.id = id;
+
+        if (id === currentChatId) {
+          item.classList.add("active");
+        }
+
+        item.addEventListener("click", () => {
+          loadChat(id);
+        });
+
+        chatHistory.appendChild(item);
+      });
+    }
+
+    // Load a specific chat
+    function loadChat(chatId) {
+      currentChatId = chatId;
+      currentMessages = chats[chatId]?.messages || [];
+
+      chatContainer.innerHTML = '';
+      currentMessages.forEach(msg => {
+        addMessage(msg.content, msg.role);
+      });
+
+      // Update active class
+      document.querySelectorAll('.history-item').forEach(item => {
+        item.classList.toggle("active", item.dataset.id === chatId);
+      });
+
+      promptInput.focus();
+    }
+
+    // Save current chat
+    function saveCurrentChat() {
+      if (currentMessages.length === 0) return;
+
+      const firstUserMsg = currentMessages.find(m => m.role === "user")?.content || "New Chat";
+      const title = firstUserMsg.substring(0, 60) + (firstUserMsg.length > 60 ? "..." : "");
+
+      chats[currentChatId] = {
+        title: title,
+        messages: currentMessages
+      };
+
+      localStorage.setItem('chatGPTChats', JSON.stringify(chats));
+      loadHistory();
+    }
+
+    // Auto resize textarea
+    promptInput.addEventListener("input", () => {
+      promptInput.style.height = "auto";
+      promptInput.style.height = promptInput.scrollHeight + "px";
+    });
+
+    function addMessage(content, role) {
+      const messageDiv = document.createElement("div");
+      messageDiv.classList.add("message", role);
+
+      const contentDiv = document.createElement("div");
+      contentDiv.classList.add("message-content");
+      contentDiv.textContent = content;
+
+      messageDiv.appendChild(contentDiv);
+      chatContainer.appendChild(messageDiv);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+
+      return { div: messageDiv, contentDiv };
+    }
+
+    function showLoading() {
+      const loadingDiv = document.createElement("div");
+      loadingDiv.classList.add("message", "assistant", "loading");
+
+      const content = document.createElement("div");
+      content.classList.add("message-content");
+      content.textContent = "";
+
+      loadingDiv.appendChild(content);
+      chatContainer.appendChild(loadingDiv);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+
+      return content;
+    }
+
+    function cleanMarkdown(text) {
+      let cleaned = text;
+      cleaned = cleaned.replace(/---+/g, '\n');
+      cleaned = cleaned.replace(/#{1,6}\s*/g, '');
+      cleaned = cleaned.replace(/\*\*(.*?)\*\*/g, '$1');
+      cleaned = cleaned.replace(/\*(.*?)\*/g, "'$1'");
+      cleaned = cleaned.replace(/^\s*[-*+]\s*/gm, '• ');
+      cleaned = cleaned.replace(/^\s*(\d+\.)\s*/gm, '$1 ');
+      cleaned = cleaned.replace(/^\s*>\s*/gm, '');
+      cleaned = cleaned.replace(/\n{3,}/g, '\n\n');
+      return cleaned.trim();
+    }
+
+    async function sendMessage() {
+      const text = promptInput.value.trim();
+      if (!text) return;
+
+      addMessage(text, "user");
+      currentMessages.push({ role: "user", content: text });
+
+      promptInput.value = "";
+      promptInput.style.height = "auto";
+
+      submitBtn.disabled = true;
+
+      const loadingContent = showLoading();
+
+      try {
+        const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${API_KEY}`,
+            "Content-Type": "application/json",
+            "HTTP-Referer": window.location.origin,
+            "X-Title": "Chat GPT Web App",
+          },
+          body: JSON.stringify({
+            model: MODEL,
+            messages: [
+              {
+                role: "system",
+                content: `You are a helpful, friendly and conversational AI assistant. 
+Always respond naturally in Roman Urdu or Urdu-English mix, just like the user is talking.
+Keep answers clear, engaging and well-structured with paragraphs when needed.
+At the VERY END of EVERY response, always add 2-3 short, interesting follow-up questions in this EXACT format:
+
+Suggested questions:
+1. [short question]
+2. [short question]
+3. [short question (optional)]
+
+Do NOT add anything after the suggested questions. Keep the suggestions relevant to the current conversation.`
+              },
+              ...currentMessages
+            ],
+            temperature: 0.7,
+            max_tokens: 2048,
+          })
+        });
+
+        if (!res.ok) throw new Error((await res.json()).error?.message || "API error");
+
+        const data = await res.json();
+        let reply = data.choices?.[0]?.message?.content || "No response";
+        reply = cleanMarkdown(reply);
+
+        loadingContent.textContent = reply;
+        loadingContent.parentElement.classList.remove("loading");
+
+        currentMessages.push({ role: "assistant", content: reply });
+
+        // Save to history after first response
+        saveCurrentChat();
+
+      } catch (err) {
+        loadingContent.textContent = "Error: " + err.message;
+        loadingContent.style.color = "#ff6b6b";
+        loadingContent.parentElement.classList.remove("loading");
+      } finally {
+        submitBtn.disabled = false;
+        promptInput.focus();
+      }
+    }
+
+    form.addEventListener("submit", e => { e.preventDefault(); sendMessage(); });
+
+    promptInput.addEventListener("keydown", e => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    newChatBtn.addEventListener("click", () => {
+      if (confirm("Naya chat shuru karna hai? Current chat save ho jayega.")) {
+        currentChatId = Date.now().toString();
+        currentMessages = [];
+        chatContainer.innerHTML = "";
+        loadHistory();
+        promptInput.focus();
+      }
+    });
+
+    // Initial load
+    loadHistory();
+
+    // Agar koi saved chat ho to pehla wala load karo
+    if (Object.keys(chats).length > 0) {
+      const latestId = Object.keys(chats).sort().pop();
+      loadChat(latestId);
+    }
+  </script>
+</body>
+</html>
