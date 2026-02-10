@@ -408,7 +408,7 @@ gap: 20px;
   width: fit-content;
   max-width: 65%;
   margin-right: auto;  /* Left align */
-  margin-left: calc(100% - 82%);
+  margin-left: calc( 100% - 88%);
 }
 
 .ai-message.loading .message-content::after {
