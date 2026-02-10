@@ -66,3 +66,7 @@ setInterval(() => {
 
 
 
+// AI functionality started from here 
+const ApiKey = "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";
+const MODEL = "tngtech/deepseek-r1t2-chimera:free";
+const chatContainer = document.getElementById('chat-area')
