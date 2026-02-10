@@ -7,6 +7,7 @@
     <title>ChatGPT</title>
     <link rel="stylesheet" href="./style.css" />
     <link rel="shortcut icon" href="./Assets/images/chatgpt-logo-background-white.png" type="image/x-icon" />
+    <script src="./app.js" defer></script>  <!-- ← Yeh line add ki hai (JS alag file mein) -->
 </head>
 
 <body>
@@ -22,7 +23,7 @@
             </div>
 
             <div class="btn-div-flex martop">
-                <button><img src="./Assets/images/newchat.png" alt="" style="margin-left: 2px;">New chat</button>
+                <button id="new-chat-btn"><img src="./Assets/images/newchat.png" alt="" style="margin-left: 2px;">New chat</button>  <!-- ← Yeh button ab new/clear chat handle karega -->
                 <button><img src="./Assets/images/search.png" alt="">Search chats</button>
                 <button><img src="./Assets/images/images.png" alt="">Images</button>
             </div>
@@ -40,9 +41,7 @@
 
             <!-- chat history -->
             <div id="searchHistory">
-                <!-- Chat History Content -->
-
-
+                <!-- Chat History Content (JS se add hoga) -->
             </div>
         </div>
         <!-- profile started -->
@@ -135,8 +134,7 @@
                     
                 </div>
                 
-                <!-- <input type="text" id="user-input" placeholder="Ask any thing"> -->
-                <textarea name="" id="user-input"  placeholder="Ask any thing"></textarea>
+                <textarea id="user-input" rows="1" placeholder="Ask any thing"></textarea>  <!-- ← Yeh change kiya hai: <input> ko <textarea> mein badla -->
                 
                 <div>
                     <div class="bg-transperant-div">
@@ -144,7 +142,6 @@
                     </div>
                     
                     <div id="sent-or-call" class="bg-white-div">
-                        <div class="imgOfSubmit"></div>
                         <img src="./Assets/images/call.png" alt="">
                     </div>
                 </div>
@@ -156,7 +153,6 @@
     <!-- main ened here  -->
     
 </body>
-<script src="./app.js"></script>
 <script src="https://kit.fontawesome.com/28bf8ecaf7.js" crossorigin="anonymous"></script>
 
 </html>
