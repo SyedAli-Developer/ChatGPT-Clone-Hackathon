@@ -1,161 +1,264 @@
-// ─────────────────────────────────────────────
-// IMPORTANT: All DOM elements should be selected at the TOP
-// ─────────────────────────────────────────────
-const dropBtn     = document.querySelector(".Dropdown-title");
-const droplist    = document.querySelector(".list");
-const theading    = document.querySelector("#temp-heading");
-const input       = document.getElementById('user-input');
-const submitDiv   = document.querySelector('#sent-or-call');
-const chatbox     = document.getElementById('chat');          // ← THIS WAS COMMENTED → UNCOMMENT THIS
+// app.js
 
-// Dropdown function (unchanged)
-function toggleDropdown() {
-    if (droplist.style.display === 'none' || droplist.style.display === '') {
-        droplist.style.display = 'block';
+// Dropdown function (tumhara code)
+const dropBtn = document.querySelector(".Dropdown-title");
+const droplist = document.querySelector(".list");
+
+dropBtn.addEventListener('click', checkDisplay);
+
+displayNone();
+function checkDisplay() {
+    if (droplist.style.display === 'none') {
+        displayBlock();
     } else {
-        droplist.style.display = 'none';
+        displayNone();
     }
 }
+function displayNone() {
+    droplist.style.display = 'none';
+}
+function displayBlock() {
+    droplist.style.display = 'block';
+}
 
-dropBtn.addEventListener('click', toggleDropdown);
-droplist.style.display = 'none';
+// Temporary heading (random text)
+const tempHeading = document.querySelector("#temp-heading");
 
-// Random welcome text (unchanged)
-function setRandomQuestion() {
-    const messages = [
+function randomQ() {
+    const texts = [
         "How can I help you?",
+        "What’s in your mind today?",
+        "What’s on the agenda today?",
         "Where should we begin?",
         "What can I help with?",
         "Ready when you are.",
         "What are you working on?"
     ];
-    const randomIndex = Math.floor(Math.random() * messages.length);
-    theading.textContent = messages[randomIndex];
+    const random = texts[Math.floor(Math.random() * texts.length)];
+    tempHeading.textContent = random;
 }
-setRandomQuestion();
+randomQ();
 
-// Submit icon logic (unchanged)
-function updateSubmitIcon() {
-    const hasText = input.value.trim().length > 0;
-    if (hasText) {
-        submitDiv.innerHTML = `<i class="fa-solid fa-arrow-up"></i>`;
-        submitDiv.style.color = 'black';
+// Input icon change (call → arrow)
+const input = document.getElementById('user-input');
+const submit = document.getElementById('sent-or-call');
+
+setInterval(() => {
+    if (input.value.trim() === '') {
+        submit.innerHTML = `<img src="./Assets/images/call.png" alt="">`;
+        submit.style.backgroundColor = 'white';
     } else {
-        submitDiv.innerHTML = `<img src="./Assets/images/call.png" alt="call">`;
-        submitDiv.style.color = '';
+        submit.innerHTML = `<i class="fa-solid fa-arrow-up"></i>`;
+        submit.style.backgroundColor = 'white';
+        submit.style.color = 'black';
     }
+}, 100);
+
+// AI Chat Logic
+const API_KEY = "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";
+const MODEL = "tngtech/deepseek-r1t2-chimera:free";
+
+const chatContainer = document.getElementById('chat');
+const historyContainer = document.getElementById('searchHistory');
+const newChatBtn = document.getElementById('new-chat-btn');
+
+let currentChatId = Date.now().toString();
+let chats = JSON.parse(localStorage.getItem('chatGPTChats')) || {};
+let currentMessages = [];
+let isFirstMessage = true;
+
+// Auto resize textarea
+input.addEventListener("input", () => {
+    input.style.height = "auto";
+    input.style.height = input.scrollHeight + "px";
+});
+
+function addMessage(content, role) {
+    const msgDiv = document.createElement("div");
+    msgDiv.className = role === "user" ? "user-message" : "ai-message";
+
+    const contentDiv = document.createElement("div");
+    contentDiv.className = "message-content";
+    contentDiv.textContent = content;
+
+    msgDiv.appendChild(contentDiv);
+    chatContainer.appendChild(msgDiv);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+
+    return contentDiv;
 }
 
-input.addEventListener('input', updateSubmitIcon);
-updateSubmitIcon();
+function showLoading() {
+    const loadingDiv = document.createElement("div");
+    loadingDiv.className = "ai-message loading";
+    const content = document.createElement("div");
+    content.className = "message-content";
+    content.textContent = "";
+    loadingDiv.appendChild(content);
+    chatContainer.appendChild(loadingDiv);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+    return content;
+}
 
-// ─────────────────────────────────────────────
-// FIXED CLICK HANDLER
-// ─────────────────────────────────────────────
-input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();           // new line na banay
-        submitDiv.click();            // same logic trigger karo
+function cleanMarkdown(text) {
+    let cleaned = text;
+    cleaned = cleaned.replace(/---+/g, '\n');
+    cleaned = cleaned.replace(/#{1,6}\s*/g, '');
+    cleaned = cleaned.replace(/\*\*(.*?)\*\*/g, '$1');
+    cleaned = cleaned.replace(/\*(.*?)\*/g, "'$1'");
+    cleaned = cleaned.replace(/^\s*[-*+]\s*/gm, '• ');
+    cleaned = cleaned.replace(/^\s*(\d+\.)\s*/gm, '$1 ');
+    cleaned = cleaned.replace(/^\s*>\s*/gm, '');
+    cleaned = cleaned.replace(/\n{3,}/g, '\n\n');
+    return cleaned.trim();
+}
+
+async function sendMessage() {
+    const text = input.value.trim();
+    if (!text) return;
+
+    // Pehla message bhejte hi temp heading remove kar do
+    if (isFirstMessage) {
+        if (tempHeading) {
+            tempHeading.remove();
+        }
+        isFirstMessage = false;
     }
-});submitDiv.addEventListener('click', () => {
-    const message = input.value.trim();
-    if (!message) return;
 
-    const div = document.createElement('div');
-    div.className = 'user-bobble';
-
-    const p = document.createElement('p');
-    p.textContent = message;
-
-    div.appendChild(p);
-    chatbox.appendChild(div);
-
-    // ─── Ye styles zaroori hain text wrap ke liye ───
-    div.style.backgroundColor   = 'var(--bg-Light-Gray)';
-    div.style.border            = 'none';
-    div.style.borderRadius      = '15px';
-    div.style.padding           = '8px 14px';          // thoda comfortable padding
-    div.style.boxShadow         = '0px 0px 5px var(--bg-Black)';
-    div.style.maxWidth          = '75%';               // ya 400px — dono theek, 75% zyada responsive
-    div.style.width             = 'fit-content';
-    div.style.display           = 'inline-block';      // ya 'flex' bhi chalega lekin inline-block behtar
-
-    // Ye teen lines text ko wrap karne ke liye sabse zaroori hain
-    div.style.wordWrap          = 'break-word';        // ya wordBreak: 'break-word'
-    div.style.whiteSpace        = 'pre-wrap';          // normal line breaks + wrapping
-    div.style.overflowWrap      = 'break-word';        // modern name for word-wrap
-
-    // Optional: better readability
-    p.style.margin              = '0';
-    p.style.wordBreak           = 'break-word';        // extra safety
+    addMessage(text, "user");
+    currentMessages.push({ role: "user", content: text });
 
     input.value = "";
-    theading.style.display = 'none';
-    chatbox.scrollTop = chatbox.scrollHeight;
-});
-// ─────────────────────────────────────────────
-// Commented code jo abhi bhi useful ho sakta hai (nahi hataya)
-// ─────────────────────────────────────────────
+    input.style.height = "auto";
 
-/*
-// AI functionality started from here 
-const ApiKey = "sk-or-v1-XXXXXXXXXXX";
-const MODEL = "";
+    submit.style.pointerEvents = "none";
 
-async function askAI(prompt) {
+    const loadingContent = showLoading();
+
     try {
         const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
             method: "POST",
             headers: {
-                "Authorization": `Bearer ${ApiKey}`,
+                "Authorization": `Bearer ${API_KEY}`,
                 "Content-Type": "application/json",
-                "HTTP-Referer": "http://localhost",  
-                "X-Title": "My Test App"
+                "HTTP-Referer": window.location.origin,
+                "X-Title": "Chat GPT Web App",
             },
             body: JSON.stringify({
                 model: MODEL,
-                messages: [{ role: "user", content: prompt }],
+                messages: [
+                    {
+                        role: "system",
+                        content: `You are a helpful, friendly and conversational AI assistant. 
+Always respond naturally in Roman Urdu or Urdu-English mix, just like the user is talking.
+Keep answers clear, engaging and well-structured with paragraphs when needed.
+At the VERY END of EVERY response, always add 2-3 short, interesting follow-up questions in this EXACT format:
+
+Suggested questions:
+1. [short question]
+2. [short question]
+3. [short question (optional)]
+
+Do NOT add anything after the suggested questions. Keep the suggestions relevant to the current conversation.`
+                    },
+                    ...currentMessages
+                ],
                 temperature: 0.7,
-                max_tokens: 200
+                max_tokens: 2048,
             })
         });
 
-        if (!res.ok) {
-            const err = await res.json();
-            console.log("Error:", err.error?.message || res.status);
-            return;
-        }
+        if (!res.ok) throw new Error((await res.json()).error?.message || "API error");
 
         const data = await res.json();
-        let reply = data.choices?.[0]?.message?.content;
-        console.log("AI reply:", reply);
-    } catch (e) {
-        console.log("Fetch fail:", e.message);
+        let reply = data.choices?.[0]?.message?.content || "No response";
+        reply = cleanMarkdown(reply);
+
+        loadingContent.textContent = reply;
+        loadingContent.parentElement.classList.remove("loading");
+
+        currentMessages.push({ role: "assistant", content: reply });
+
+        saveCurrentChat();
+
+    } catch (err) {
+        loadingContent.textContent = "Error: " + err.message;
+        loadingContent.style.color = "#ff6b6b";
+        loadingContent.parentElement.classList.remove("loading");
+    } finally {
+        submit.style.pointerEvents = "auto";
+        input.focus();
     }
 }
 
-// For Test 
-// askAI("Elon Musk ke baare mein 50 words mein bata");
-*/
+// Events
+submit.addEventListener("click", sendMessage);
 
-/*
-// jsonplaceholder users fetch (testing ke liye tha)
-async function getUsers() {
-    try {
-        loading.textContent = 'loading...'
-        let response = await fetch("https://jsonplaceholder.typicode.com/users")
-        let data = await response.json();
-        loading.textContent = " "
-
-        container.innerHTML = data.map(item => `
-            <h2>${item.name}</h2>
-            <div class="user-info"><span class="label">Username:</span> ${item.username}</div>
-            <div class="user-info"><span class="label">Email:</span> ${item.email}</div>
-            <div class="user-info"><span class="label">Phone:</span> ${item.phone}</div>
-        `).join('');
-    } catch (error) {
-        loading.textContent = ""
-        err.textContent = `${error}`
+input.addEventListener("keydown", e => {
+    if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
     }
+});
+
+newChatBtn.addEventListener("click", () => {
+    if (confirm("Naya chat shuru karna hai? Current chat save ho jayega.")) {
+        currentChatId = Date.now().toString();
+        currentMessages = [];
+        chatContainer.innerHTML = "";
+        tempHeading.textContent = "";
+        randomQ();  // New chat pe phir se random text (agar chaho to yeh line hata dena)
+        isFirstMessage = true;
+        loadHistory();
+        input.focus();
+    }
+});
+
+// History Functions
+function loadHistory() {
+    if (!historyContainer) return;
+
+    historyContainer.innerHTML = '';
+    Object.keys(chats).forEach(id => {
+        const item = document.createElement("div");
+        item.className = "history-item";
+        item.textContent = chats[id].title || "New Chat";
+        item.dataset.id = id;
+
+        if (id === currentChatId) item.classList.add("active");
+
+        item.addEventListener("click", () => loadChat(id));
+        historyContainer.appendChild(item);
+    });
 }
-*/
+
+function loadChat(chatId) {
+    currentChatId = chatId;
+    currentMessages = chats[chatId]?.messages || [];
+    chatContainer.innerHTML = '';
+    currentMessages.forEach(msg => addMessage(msg.content, msg.role));
+
+    document.querySelectorAll('.history-item').forEach(item => {
+        item.classList.toggle("active", item.dataset.id === chatId);
+    });
+
+    input.focus();
+}
+
+function saveCurrentChat() {
+    if (currentMessages.length === 0) return;
+
+    const firstMsg = currentMessages.find(m => m.role === "user")?.content || "New Chat";
+    const title = firstMsg.substring(0, 60) + (firstMsg.length > 60 ? "..." : "");
+
+    chats[currentChatId] = { title, messages: currentMessages };
+    localStorage.setItem('chatGPTChats', JSON.stringify(chats));
+    loadHistory();
+}
+
+// Initial load
+loadHistory();
+if (Object.keys(chats).length > 0) {
+    const latest = Object.keys(chats).sort().pop();
+    loadChat(latest);
+}
