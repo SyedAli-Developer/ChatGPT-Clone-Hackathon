@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ChatGPT</title>
     <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./responsive.css" />
     <link rel="shortcut icon" href="./Assets/images/chatgpt-logo-background-white.png" type="image/x-icon" />
 </head>
 
@@ -17,7 +18,8 @@
                 <a href=""><img width="20px" src="./Assets/images/sidebar.png" alt=""></a>
             </div>
             <div class="btn-div-flex martop">
-                <button id="new-chat-btn"><img src="./Assets/images/newchat.png" alt="" style="margin-left: 2px;">New chat</button>
+                <button id="new-chat-btn"><img src="./Assets/images/newchat.png" alt="" style="margin-left: 2px;">New
+                    chat</button>
                 <button><img src="./Assets/images/search.png" alt="">Search chats</button>
                 <button><img src="./Assets/images/images.png" alt="">Images</button>
             </div>
@@ -29,7 +31,7 @@
                 <button><img src="./Assets/images/projects.png" alt="">Projects</button>
             </div>
             <div id="searchHistory">
-                </div>
+            </div>
         </div>
         <div class="profile">
             <img src="./Assets/images/profile.png" alt="">
@@ -37,9 +39,15 @@
             <button class="upgrade">Upgrade</button>
         </div>
     </nav>
-    
+
     <main id="main">
         <nav class="main-nav">
+            <!-- Hamburger icon (sirf mobile/tablet pe dikhega) -->
+            <div class="hamburger" id="hamburgerBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
             <div id="Dropdown">
                 <button class="Dropdown-title">ChatGPT <span><i class="fa-solid fa-chevron-down"></i></span></button>
                 <div class="list">
@@ -80,12 +88,12 @@
             <div id="chat">
                 <h2 id="temp-heading"></h2>
             </div>
-            
+
             <div id="input-bar" class="input-bar">
                 <div class="bg-transperant-div">
                     <img width="26px" src="./Assets/images/plus.png" alt="">
                 </div>
-                <textarea name="" id="user-input"  placeholder="Ask any thing"></textarea>
+                <textarea name="" id="user-input" placeholder="Ask any thing"></textarea>
                 <div>
                     <div class="bg-transperant-div">
                         <img src="./Assets/images/mic-white.png" alt="">
@@ -97,12 +105,13 @@
                 </div>
             </div>
         </section>
-        
-        
-        
+
+
+
     </main>
 </body>
 
 <script src="./app.js"></script>
 <script src="https://kit.fontawesome.com/28bf8ecaf7.js" crossorigin="anonymous"></script>
+
 </html>

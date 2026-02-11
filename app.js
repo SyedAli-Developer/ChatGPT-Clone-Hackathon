@@ -318,3 +318,46 @@ function startNewChat() {
 // Initial page load – history sidebar dikhao, lekin naya chat shuru karo
 loadHistory();
 startNewChat();
+
+
+// Hamburger menu toggle + outside click band karne ka logic
+const hamburger = document.getElementById('hamburgerBtn');
+const sidebar = document.getElementById('sideBar');
+
+if (hamburger && sidebar) {
+    // Hamburger click pe sidebar toggle karo
+    hamburger.addEventListener('click', function(e) {
+        e.stopPropagation();  // Click bubble na ho
+        hamburger.classList.toggle('active');
+        sidebar.classList.toggle('active');
+    });
+
+    // Bahar click karne pe sidebar band ho jaye (mobile UX ke liye)
+    document.addEventListener('click', function(e) {
+        if (!sidebar.contains(e.target) && !hamburger.contains(e.target)) {
+            sidebar.classList.remove('active');
+            hamburger.classList.remove('active');
+        }
+    });
+
+    // Optional: Escape key press pe band kar do
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && sidebar.classList.contains('active')) {
+            sidebar.classList.remove('active');
+            hamburger.classList.remove('active');
+        }
+    });
+}
+
+// Page load pe sidebar ko initial state set karo (mobile pe hide)
+function setInitialSidebarState() {
+    if (window.innerWidth <= 1024) {
+        sidebar.classList.remove('active');  // mobile pe hide
+    } else {
+        sidebar.classList.add('active');     // desktop pe show
+    }
+}
+
+// Page load aur resize pe call karo
+setInitialSidebarState();
+window.addEventListener('resize', setInitialSidebarState);

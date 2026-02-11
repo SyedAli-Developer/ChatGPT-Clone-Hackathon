@@ -1,0 +1,211 @@
+/* ================================================
+   1. Mobile-first approach (default = small phones)
+   Sab kuch pehle mobile ke liye likho, phir media queries se bada karo
+   ================================================ */
+
+/* Default styles (phones < 576px ya ~ ≤ 375–480px) */
+#sideBar {
+  width: 280px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  transform: translateX(-100%);
+  transition: transform 0.35s ease;
+  z-index: 1500;
+  background: var(--bg-Black);
+}
+
+#main {
+  width: 100%;
+  margin-left: 0;
+}
+
+.hamburger {
+  display: flex;           /* mobile pe hamesha dikhega */
+}
+
+#input-bar {
+  width: 94%;
+  max-width: none;
+  bottom: 12px;
+  left: 3%;
+  right: 3%;
+  transform: none;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+#chat {
+  padding: 16px 12px;
+}
+
+.user-message .message-content,
+.ai-message .message-content {
+  max-width: 86%;
+}
+
+/* ────────────────────────────────────────────────
+   2. Tablet / small laptop (576px – 1024px)
+   ──────────────────────────────────────────────── */
+@media (min-width: 576px) and (max-width: 1024px) {
+
+  #sideBar {
+    width: 260px;
+    transform: translateX(-100%);     /* ab bhi hide by default */
+  }
+
+  #sideBar.active {
+    transform: translateX(0);
+  }
+
+  #input-bar {
+    width: 85%;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 20px;
+    padding: 12px;
+    border-radius: 28px;
+  }
+
+  #chat {
+    padding: 20px 24px;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .user-message .message-content,
+  .ai-message .message-content {
+    max-width: 78%;
+  }
+
+  #temp-heading {
+    font-size: 2.2rem;
+    margin-top: 100px;
+  }
+}
+
+/* ────────────────────────────────────────────────
+   3. Desktop / large screens (1025px aur usse upar)
+   ──────────────────────────────────────────────── */
+@media (min-width: 1025px) {
+    body{
+        overflow: hidden;
+    }
+  #sideBar {
+    position: relative;               /* fixed nahi, normal flow mein */
+    transform: translateX(0) !important; /* hamesha visible */
+    width: 260px;
+    min-width: 260px;
+  }
+
+  #main {
+  background-color: var(--bg-Dark-Gray);
+  margin-left: auto;
+  width: calc(100% - 250px);
+  height: 100vh;
+  padding: 10px 0px;
+  position: relative;
+}
+
+  .hamburger {
+    display: none;                    /* bade screen pe nahi chahiye */
+  }
+
+/* Desktop section mein yeh change karo */
+
+  #input-bar {
+    background-color: var(--bg-Light-Gray);
+    width: 65%;
+    height: 58px;
+    border-radius: 30px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0px 0px 4px var(--bg-Black);
+    position: absolute;                    /* ← fixed rakho */
+    bottom: 30px;                       /* ← bottom fixed */
+    left: 50%;
+    transform: translateX(-50%);        /* ← center */
+    margin: 0;                          /* ← margin remove */
+  }
+}
+
+  #chat {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 40px;
+  }
+
+  .user-message .message-content,
+  .ai-message .message-content {
+    max-width: 65%;
+  }
+
+  #temp-heading {
+    font-size: 2.8rem;
+    margin-top: 140px;
+  }
+
+  /* Dropdown ko bhi thoda adjust kar sakte ho */
+  .list {
+    width: 340px;
+    left: 0;
+  }
+
+.profile{
+    position: absolute;
+    bottom: 0px;
+}
+
+
+/* Hamburger icon styling */
+.hamburger {
+    display: none;                    /* default mein chhupa rahega */
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    cursor: pointer;
+    margin-left: 16px;
+    z-index: 2000;
+}
+
+.hamburger span {
+    width: 100%;
+    height: 3px;
+    background-color: var(--text-White);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Sidebar ko slide karne ke liye */
+#sideBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 260px;
+    background: var(--bg-Black);
+    transform: translateX(-100%);
+    transition: transform 0.35s ease;
+    z-index: 1500;                    /* header se upar rahe */
+}
+
+/* Jab active ho to dikhe */
+#sideBar.active {
+    transform: translateX(0);
+}
